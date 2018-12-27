@@ -2,7 +2,7 @@
 % Yang Su
 % yangsu@uw.edu
 
-% This file reproduces all the results and plots that are used in my paper
+% This file reproduces all the results and plots that are used in my thesis
 
 
 % Section 1: Baseline Results
