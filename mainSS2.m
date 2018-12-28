@@ -5,9 +5,9 @@
 % open profiler
 % set up num of workers; num needs to be changed depending on # of CPUs
 profile on;
-c = parcluster('local');
-c.NumWorkers = 4;
-parpool(c, c.NumWorkers);
+% c = parcluster('local');
+% c.NumWorkers = 4;
+% parpool(c, c.NumWorkers);
 
 %================
 %   Parameters

@@ -30,14 +30,14 @@ for i = 1 : 2
   t = tr - tb - i + 1; %% t goes from 45 to 1   
   % go through each (today's) state grid point
   
+  cvalLifeCopy = cvalLife(:, :, :, t : 45);
+  pvalLifeCopy = pvalLife(:, :, :, t : 45);
   if(t == 45)
     tplusonefval = fvalRET(:, :, 1);
-    cvalLifeCopy = cvalRET(:, :, 1);
-    pvalLifeCopy = pvalRET(:, :, 1);
   else
     tplusonefval = fvalLife(:, :, :, t + 1);
-    cvalLifeCopy = cvalLife(:, :, :, t + 1);
-    pvalLifeCopy = pvalLife(:, :, :, t + 1);
+    cvalLifeCopy = cvalLife(:, :, :, t : 45);
+    pvalLifeCopy = pvalLife(:, :, :, t : 45);
   end
   
   ticBytes(gcp)
@@ -50,31 +50,30 @@ for i = 1 : 2
     for jj = 1:length(ssVec)
       for k = 1:length(ThetaVals)
         if(t == 45)
-          lowc = 0.3*cvalLifeCopy(j, jj, 1);
-          highc = cvalLifeCopy(j,jj, 1) + 10;
+          lowc = 0.3*cvalRET(j, jj, 1);
+          highc = cvalRET(j,jj, 1) + 10;
         elseif(t < 45 && t > 40) % t = 45 to 41
-          lowc = cvalLifeCopy(j, jj, k, 1 ) - 5;
-          highc = cvalLifeCopy(j, jj, k, 1) + 5;
+          lowc = cvalLifeCopy(j, jj, k, t + 1 ) - 5;
+          highc = cvalLifeCopy(j, jj, k, t + 1) + 5;
         elseif(t < 41 && t > 31) % t = 40 to 32
-          lowc = cvalLifeCopy(j, jj, k, 1) - 5;
-          highc = cvalLifeCopy(j, jj, k, 1) + 5;
+          lowc = cvalLifeCopy(j, jj, k, t + 1) - 5;
+          highc = cvalLifeCopy(j, jj, k, t + 1) + 5;
         else % t < 32
-        lowc = cvalLifeCopy(j, jj, k, 1) - 5;
-        highc = cvalLifeCopy(j, jj, k, 1) + 5;
+        lowc = cvalLifeCopy(j, jj, k, t + 1) - 5;
+        highc = cvalLifeCopy(j, jj, k, t + 1) + 5;
         end
         lowc2 = ntoi(lowc, 1, cgrid, nc);
         highc2 = ntoi(highc, 1, cgrid, nc);
         cgrid2 = cgrid(1, lowc2 : highc2);
-        
         if(t == 45 && wVec(j) > 40)
-          lowp = pvalLifeCopy(j, jj, 1) - 0.2;
-          highp = pvalLifeCopy(j, jj, 1) + 0.2;
+          lowp = pvalRET(j, jj, 1) - 0.2;
+          highp = pvalRET(j, jj, 1) + 0.2;
           lowp2 = ntoi(lowp, 1, pgrid, np);
           highp2 = ntoi(highp, 1, pgrid, np);
           pgrid2 = pgrid(1, lowp2 : highp2);
         elseif(t < 45 && wVec(j) > 40)
-          lowp = pvalLifeCopy(j, jj, k, 1) - 0.2;
-          highp = pvalLifeCopy(j, jj, k, 1) + 0.2; 
+          lowp = pvalLifeCopy(j, jj, k, t + 1) - 0.2;
+          highp = pvalLifeCopy(j, jj, k, t + 1) + 0.2; 
           lowp2 = ntoi(lowp, 1, pgrid, np);
           highp2 = ntoi(highp, 1, pgrid, np);
           pgrid2 = pgrid(1, lowp2 : highp2);
