@@ -15,13 +15,13 @@ cvalRET = zeros(length(wVec), td - tr);
 %===================================
 %   Terminal Period ( i.e. t = 100)
 %===================================
-fvalRET(:, td - tr)= u(exp(wVec) + (1-ht(80))*(1-taxss)*ret_y, Rho); % given beginning of period wealth,
+fvalRET(:, td - tr)= u(wVec + (1-ht(80))*(1-taxss)*ret_y, Rho); % given beginning of period wealth,
                                         % the agent will consume all wealth
                                         % plus income in the very last
                                         % period, thus we get the last
                                         % period value function
 
-cvalRET(:, td - tr) = exp(wVec) + (1-ht(80))*(1-taxss)*ret_y;
+cvalRET(:, td - tr) = wVec + (1-ht(80))*(1-taxss)*ret_y;
 
 
 for i = 2:35
@@ -37,13 +37,13 @@ for i = 2:35
          if(t == 34)
             lowc = cvalRET(j, t + 1)/2.5;
             highc = cvalRET(j, t + 1);
-            if(exp(wVec(j)) >= 50)
+            if(wVec(j) >= 50)
                 highc = cvalRET(j, t + 1)/1.2;
             end
          elseif(t < 34 && t > 31) 
             lowc = cvalRET(j, t + 1)/3.5;
             highc = cvalRET(j, t + 1);
-            if(exp(wVec(j)) >= 50)
+            if(wVec(j) >= 50)
                 highc = cvalRET(j, t + 1)/1.1;
             end
          else % t < 31
@@ -59,7 +59,7 @@ for i = 2:35
             lowp2 = 1;
             highp2 = np;
             
-         if(exp(wVec(j)) > 40 && t < 35) % wealth larger than a threshold      
+         if(wVec(j) > 40 && t < 35) % wealth larger than a threshold      
             lowp = pvalRET(j, t + 1) - 0.2;
             highp = pvalRET(j, t + 1) + 0.2; 
             lowp2 = ntoi(lowp, 1, pgrid, np);
@@ -75,7 +75,7 @@ for i = 2:35
         
         vtnext = 0;  %set initial value of the next period value
         
-        savings = (exp(wVec(j)) + net_income - CRN); % given the current state grid value, we know all the potential savings over the consumption grid
+        savings = (wVec(j) + net_income - CRN); % given the current state grid value, we know all the potential savings over the consumption grid
                                                % savings is updated with
                                                % every state grid value
                                                % return shock value
@@ -95,7 +95,7 @@ for i = 2:35
              % grid) into a column vector in order to get interporlated
              % values
             newwtplusone = reshape(wtplusone_RET, [], 1);
-            vtplusone_RET = vtplusonei_R(log(newwtplusone));
+            vtplusone_RET = vtplusonei_R(newwtplusone);
             
               % reshape the interpolated value back to the same size as the
               % control grids 
