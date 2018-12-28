@@ -2,6 +2,13 @@
 % Yang Su
 % yangsu@uw.edu
 
+% open profiler
+% set up num of workers; num needs to be changed depending on # of CPUs
+profile on;
+c = parcluster('local');
+c.NumWorkers = 4;
+parpool(c, c.NumWorkers);
+
 %================
 %   Parameters
 %================
@@ -92,8 +99,8 @@ retirementperiodsSS2;
 %   Keep solving the model until we reach to t = 1
 %=================================================
 % otherperiods_wb_pchip_shockgrids; 
-otherperiodsSS2; 
+otherperiodsSS2parfor; 
 % %=================================================
 %  Simulation
 %=================================================
-simulationSS2;
+% simulationSS2;
