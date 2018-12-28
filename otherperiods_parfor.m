@@ -24,19 +24,19 @@ pvalLife = zeros(length(wVec), length(ThetaVals), tr - tb);
 [TProb, PProb, RProb] = ndgrid(weig, weig, weig);
 
 
-for i = 1 : 1
+for i = 1 : 45
   t = tr - tb - i + 1; %% t goes from 45 to 1      
   % go through each (today's) state grid point
   tic
-  temp = cvalLife(j, :, :);
-  tempp = pvalLife(j, :, :);
+  cvalLifeCopy = cvalLife(:, :, :);
+  pvalLifeCopy = pvalLife(:, :, :);
   if(t == 45)
     tplusonefval = fvalRET(:, 1);
   else
     tplusonefval = fvalLife(:, :, t + 1);
   end
   
-  for j = 1:length(wVec)
+  parfor j = 1:length(wVec)
     ctemp = zeros(length(ThetaVals), 1);
     ptemp = zeros(length(ThetaVals), 1);
     ltemp = zeros(length(ThetaVals), 1);
@@ -47,14 +47,14 @@ for i = 1 : 1
         lowc = cvalRET(j, 1) - 10;
         highc = cvalRET(j, 1) + 10;
       elseif(t < 45 && t > 40) % t = 45 to 41
-        lowc = temp(1, k, t + 1) - 8;
-        highc = temp(1, k, t + 1) + 8;
+        lowc = cvalLifeCopy(j, k, t + 1) - 8;
+        highc = cvalLifeCopy(j, k, t + 1) + 8;
       elseif(t < 41 && t > 31) % t = 40 to 32
-        lowc = temp(1, k, t + 1) - 5;
-        highc = temp(1, k, t + 1) + 5;
+        lowc = cvalLifeCopy(j, k, t + 1) - 5;
+        highc = cvalLifeCopy(j, k, t + 1) + 5;
       else % t < 32
-        lowc = temp(1, k, t + 1) - 5;
-        highc = temp(1, k, t + 1) + 5;
+        lowc = cvalLifeCopy(j, k, t + 1) - 5;
+        highc = cvalLifeCopy(j, k, t + 1) + 5;
       end
      
       lowc2 = ntoi(lowc, 1, cgrid, nc);
@@ -67,8 +67,8 @@ for i = 1 : 1
           lowp = pvalRET(j, 1) - 0.2;
           highp = pvalRET(j, 1) + 0.2;
         else
-          lowp = tempp(1, k, t + 1) - 0.2;
-          highp = tempp(1, k, t + 1) + 0.2; 
+          lowp = pvalLifeCopy(j, k, t + 1) - 0.2;
+          highp = pvalLifeCopy(j, k, t + 1) + 0.2; 
         end
             
         lowp2 = ntoi(lowp, 1, pgrid, np);
