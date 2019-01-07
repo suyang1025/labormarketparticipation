@@ -6,7 +6,7 @@
 
 Rho     = 5;                                %(* Coefficient of Relative Risk Aversion *)
 Beta    = 0.97;                             %(* Discount factor *)
-alpha   = 0.7;                              %(* Relative importance of leisure *)
+alpha   = 0.9;                              %(* Relative importance of leisure *)
 RFree   = 1.02;                             %(* Gross interest rate *)
 
 

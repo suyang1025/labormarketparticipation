@@ -30,7 +30,8 @@ for i = 1 : 45
   tic
   cvalLifeCopy = cvalLife(:, :, :);
   pvalLifeCopy = pvalLife(:, :, :);
-  if(t == 45)
+  
+  if(t == 45) %tplusonefval is a broadcast variable
     tplusonefval = fvalRET(:, 1);
   else
     tplusonefval = fvalLife(:, :, t + 1);
@@ -44,17 +45,17 @@ for i = 1 : 45
 
     for k = 1:length(ThetaVals)   
       if(t == 45)
-        lowc = cvalRET(j, 1) - 10;
-        highc = cvalRET(j, 1) + 10;
+        lowc = cvalRET(j, 1)/2;
+        highc = cvalRET(j, 1)*1.2;
       elseif(t < 45 && t > 40) % t = 45 to 41
-        lowc = cvalLifeCopy(j, k, t + 1) - 8;
-        highc = cvalLifeCopy(j, k, t + 1) + 8;
+        lowc = cvalLifeCopy(j, k, t + 1)/2;
+        highc = cvalLifeCopy(j, k, t + 1)*1.2;
       elseif(t < 41 && t > 31) % t = 40 to 32
-        lowc = cvalLifeCopy(j, k, t + 1) - 5;
-        highc = cvalLifeCopy(j, k, t + 1) + 5;
+        lowc = cvalLifeCopy(j, k, t + 1)/2;
+        highc = cvalLifeCopy(j, k, t + 1)*1.2;
       else % t < 32
-        lowc = cvalLifeCopy(j, k, t + 1) - 5;
-        highc = cvalLifeCopy(j, k, t + 1) + 5;
+        lowc = cvalLifeCopy(j, k, t + 1)/2;
+        highc = cvalLifeCopy(j, k, t + 1)*1.2;
       end
      
       lowc2 = ntoi(lowc, 1, cgrid, nc);
@@ -64,11 +65,11 @@ for i = 1 : 45
       if(wVec(j) > 40 && t < 46) % wealth larger than a threshold      
         
         if(t == 45)
-          lowp = pvalRET(j, 1) - 0.2;
-          highp = pvalRET(j, 1) + 0.2;
+          lowp = pvalRET(j, 1) - 0.5;
+          highp = pvalRET(j, 1) + 0.5;
         else
-          lowp = pvalLifeCopy(j, k, t + 1) - 0.2;
-          highp = pvalLifeCopy(j, k, t + 1) + 0.2; 
+          lowp = pvalLifeCopy(j, k, t + 1) - 0.5;
+          highp = pvalLifeCopy(j, k, t + 1) + 0.5; 
         end
             
         lowp2 = ntoi(lowp, 1, pgrid, np);

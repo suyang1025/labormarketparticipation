@@ -2,6 +2,7 @@
 % Yang Su
 % yangsu@uw.edu
 
+profile on;
 %================
 %   Parameters
 %================
@@ -13,20 +14,20 @@ spdef;
 %==================================
 %   Setup grids and shocks
 %==================================
-
-wVec = linspace(wMin, wMax, 40);
+wVec = linspace(wMin, wMax, 80);
+lengthWVec = length(wVec);
 
 %==================================
 %   Gauss Quadrature 
 % %==================================
- weig = zeros(1, 3);
- weig(1,1)= 0.1666666666666;
- weig(1,2)= 0.6666666666666;
- weig(1,3)= 0.1666666666666;
- grid = zeros(1, 3);
- grid(1,1)= -1.73205080756887;
- grid(1,2)=  0.0;
- grid(1,3)=  1.73205080756887;
+weig = zeros(1, 3);
+weig(1,1)= 0.1666666666666;
+weig(1,2)= 0.6666666666666;
+weig(1,3)= 0.1666666666666;
+grid = zeros(1, 3);
+grid(1,1)= -1.73205080756887;
+grid(1,2)=  0.0;
+grid(1,3)=  1.73205080756887;
 
 ThetaVals = sigma_t.*grid;
 
@@ -65,7 +66,7 @@ end
 
 fl_y = f_y'.*ThetaVals;
 
-% Gomes (2008) configuration of SS income (resulted ret_y = 3.56)
+% Gomes (2008) configuration of SS income (resulted ret_y = 8.7173)
 ret_y = exp(lambda*mean(lnf)*(1 - l_underlined));
 
 % % Chai et al (2010) configuration of SS income (resulted ret_y = 53.4583)
