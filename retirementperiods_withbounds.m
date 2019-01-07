@@ -4,13 +4,13 @@
 %======================
 %   Setup Control  Grids
 %======================
-cgrid = linspace(1, highc, nc);
+cgrid = linspace(0, highc, nc);
 pgrid = linspace(0, 1, np);
 [CR, PR] = ndgrid(cgrid, pgrid);
 
-fvalRET = zeros(length(wVec), td - tr); 
-pvalRET = zeros(length(wVec), td - tr);
-cvalRET = zeros(length(wVec), td - tr);
+fvalRET = zeros(lengthWVec, td - tr); 
+pvalRET = zeros(lengthWVec, td - tr);
+cvalRET = zeros(lengthWVec, td - tr);
 
 %===================================
 %   Terminal Period ( i.e. t = 100)
@@ -29,7 +29,7 @@ for i = 2:35
     t = td - tr - i + 1; %% t goes from 34 to 1 
     currentyr = td - i + 1; %% current age is 99 to 66
     
-    net_income = (1-ht(currentyr - tb))*(1-taxss)*ret_y; % income is deterministic at each retirement age
+    net_income = (1 - ht(currentyr - tb))*(1 - taxss)*ret_y; % income is deterministic at each retirement age
     vtplusonei_R = griddedInterpolant(wVec, fvalRET(:, t + 1),  'pchip'); 
 
     for j = 1:length(wVec) 
@@ -69,11 +69,9 @@ for i = 2:35
          pgrid2 = pgrid(1, lowp2 : highp2);
        
         % update the control grid
-            [CRN, PRN] = ndgrid(cgrid2, pgrid2);
+            [CRN, PRN] = ndgrid(cgrid, pgrid);
             [nc2, np2] = size(CRN);  
      
-        
-        vtnext = 0;  %set initial value of the next period value
         
         savings = (wVec(j) + net_income - CRN); % given the current state grid value, we know all the potential savings over the consumption grid
                                                % savings is updated with
@@ -83,7 +81,9 @@ for i = 2:35
         
         ut = ul2(CRN, ones(size(CRN)), Rho, alpha);  
         ut2 = ut.*(savings >0) + infinity.*(savings <= 0); % assign current period utility a very small value when savings are negative
-  
+        
+        vtnext = 0;  %set initial value of the next period value
+        
         for k = 1:length(calRVals)
             % below is w(t+1) on all control grid points given the current
             % state and one return shock value, the loop goes through each
