@@ -1,0 +1,24 @@
+% EstimateFcost.m
+% This file estimates fcost based on population data labor force participation rate, using method of simulated moment
+
+% clear all; close all;
+
+TimeS = cputime;
+disp('=======================')
+
+% Estimation
+HoursWorked35to50 = 0.412;
+
+Data_SCF_wealth                          % Load data
+WealthCollege = WealthPopulationCollege; % Default WealthCollege is population itself
+weight        = ones(1,7);               % Weight = 1 for each of the 7 age groups
+x0            = [4.0,0.99];
+options=optimset('Display','final','MaxFunEvals',10000,'MaxIter',10000,'tolx',0.01,'tolfun',1); 
+  % Option on display of output, # of evaluation and convergence criteria
+ParamsWithPopulation  % Estimate params with population data
+% Bootstrap             % Estimate params and standard errors by bootstrapping (If this is commented, standard errors are not estimated) 
+ 
+% Display time spent 
+TimeE = cputime;
+disp('Time Spent (mins)')
+disp((TimeE - TimeS)/60)

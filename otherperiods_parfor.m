@@ -103,7 +103,7 @@ for i = 1 : 45
         savings2 = max(savings, zeros(size(savings)));
         
         % assign current period utility a very small value when savings are negative
-        ut = ul2(CN, LN, Rho, alpha) -fcost(t, 1).*(LN < 1);
+        ut = ul2(CN, LN, Rho, alpha) -fcost.*(LN < 1);
         ut2 = ut.*(savings >0) + infinity.*(savings <= 0); 
 
         % Start calculate the expected value of the next period 
@@ -151,7 +151,7 @@ for i = 1 : 45
         savings2 = max(savings, zeros(size(savings)));
 
         % assign current period utility a very small value when savings are negative
-        ut = ul2(CN, LN, Rho, alpha)  - fcost(t, 1).*(LN < 1);
+        ut = ul2(CN, LN, Rho, alpha)  - fcost.*(LN < 1);
         ut2 = ut.*(savings >0) + infinity.*(savings <= 0); 
             
         % now find the expected value function for t + 1

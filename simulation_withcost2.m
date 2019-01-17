@@ -266,4 +266,4 @@ lprate3544 = mean(lprate(15:24, 1));
 lprate4554 = mean(lprate(25:34, 1));
 lprate5565 = mean(lprate(35:45, 1));
 
-simlprate = mean(lprate(4:34, 1))
+simlprate = mean(lprate(4:34, 1));
