@@ -25,7 +25,8 @@ pprate = zeros(td - tb, 1);
 
 % Initial Wealth Distributions 
 
-wpath(1, :) = lognrnd(0.988, 1.370, 1, sim);
+% wpath(1, :) = lognrnd(0.988, 1.370, 1, sim);
+wpath(1, :) = zeros(1, sim);
 llowerbound = l_underlined;
 cplowerbound = 0;
 cupperbound = highc;
@@ -72,9 +73,9 @@ for i = 1 : 80
     % known
     
     thetaindx = find(ThetaVals == Thetapath(i, j));
-    cvalLifei = griddedInterpolant(wVec, cvalLife(:, thetaindx, i), 'pchip');
-    lvalLifei = griddedInterpolant(wVec, lvalLife(:, thetaindx, i), 'pchip');
-    pvalLifei = griddedInterpolant(wVec, pvalLife(:, thetaindx, i), 'pchip');
+    cvalLifei = griddedInterpolant(wVec, cvalLife(:, thetaindx, i), 'spline');
+    lvalLifei = griddedInterpolant(wVec, lvalLife(:, thetaindx, i), 'spline');
+    pvalLifei = griddedInterpolant(wVec, pvalLife(:, thetaindx, i), 'spline');
     
     
     % find current period policies given today's wealth and transitory
@@ -136,9 +137,9 @@ for i = 1 : 80
     % known
     
     thetaindx = find(ThetaVals == Thetapath(i, j));
-    cvalLifei = griddedInterpolant(wVec, cvalLife(:, thetaindx, i), 'pchip');
-    lvalLifei = griddedInterpolant(wVec, lvalLife(:, thetaindx, i), 'pchip');
-    pvalLifei = griddedInterpolant(wVec, pvalLife(:, thetaindx, i), 'pchip');
+    cvalLifei = griddedInterpolant(wVec, cvalLife(:, thetaindx, i), 'spline');
+    lvalLifei = griddedInterpolant(wVec, lvalLife(:, thetaindx, i), 'spline');
+    pvalLifei = griddedInterpolant(wVec, pvalLife(:, thetaindx, i), 'spline');
     
     
     % % find current period policies given today's wealth and transitory
@@ -195,8 +196,8 @@ for i = 1 : 80
    
 
     else % t > 65
-    cvalLifei = griddedInterpolant(wVec, cvalRET(:, age - tr), 'pchip');
-    pvalLifei = griddedInterpolant(wVec, pvalRET(:, age - tr), 'pchip');
+    cvalLifei = griddedInterpolant(wVec, cvalRET(:, age - tr), 'spline');
+    pvalLifei = griddedInterpolant(wVec, pvalRET(:, age - tr), 'spline');
     
     cpath(i, j) = cvalLifei(wpath(i, j));
     cpath(i, j) = max( cpath(i, j), cplowerbound);
@@ -265,4 +266,4 @@ lprate3544 = mean(lprate(15:24, 1));
 lprate4554 = mean(lprate(25:34, 1));
 lprate5565 = mean(lprate(35:45, 1));
 
-simlprate = mean(lprate(4:34, 1));
+simlprate = mean(lprate(4:34, 1))

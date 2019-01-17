@@ -1,0 +1,6 @@
+function F = distance(x)
+fcost = fcostrho(1);
+Rho = fcostrho(2);
+main_withbounds;
+F = abs(simlprate - 0.829);
+end

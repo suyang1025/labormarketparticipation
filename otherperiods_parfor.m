@@ -45,16 +45,16 @@ for i = 1 : 45
 
     for k = 1:length(ThetaVals)   
       if(t == 45)
-        lowc = cvalRET(j, 1)/2;
-        highc = cvalRET(j, 1)*1.2;
+        lowc = cvalRET(j, 1)*0.5;
+        highc = cvalRET(j, 1)*1.5;
       elseif(t < 45 && t > 40) % t = 45 to 41
-        lowc = cvalLifeCopy(j, k, t + 1)/2;
+        lowc = cvalLifeCopy(j, k, t + 1)*0.7;
         highc = cvalLifeCopy(j, k, t + 1)*1.2;
       elseif(t < 41 && t > 31) % t = 40 to 32
-        lowc = cvalLifeCopy(j, k, t + 1)/2;
+        lowc = cvalLifeCopy(j, k, t + 1)*0.8;
         highc = cvalLifeCopy(j, k, t + 1)*1.2;
       else % t < 32
-        lowc = cvalLifeCopy(j, k, t + 1)/2;
+        lowc = cvalLifeCopy(j, k, t + 1)*0.8;
         highc = cvalLifeCopy(j, k, t + 1)*1.2;
       end
      
@@ -103,7 +103,7 @@ for i = 1 : 45
         savings2 = max(savings, zeros(size(savings)));
         
         % assign current period utility a very small value when savings are negative
-        ut = ul2(CN, LN, Rho, alpha) -fcost.*(LN < 1);
+        ut = ul2(CN, LN, Rho, alpha) -fcost(t, 1).*(LN < 1);
         ut2 = ut.*(savings >0) + infinity.*(savings <= 0); 
 
         % Start calculate the expected value of the next period 
@@ -151,7 +151,7 @@ for i = 1 : 45
         savings2 = max(savings, zeros(size(savings)));
 
         % assign current period utility a very small value when savings are negative
-        ut = ul2(CN, LN, Rho, alpha)  - fcost.*(LN < 1);
+        ut = ul2(CN, LN, Rho, alpha)  - fcost(t, 1).*(LN < 1);
         ut2 = ut.*(savings >0) + infinity.*(savings <= 0); 
             
         % now find the expected value function for t + 1

@@ -60,8 +60,8 @@ for i = 2:35
             highp2 = np;
             
          if(wVec(j) > 40 && t < 35) % wealth larger than a threshold      
-            lowp = pvalRET(j, t + 1) - 0.2;
-            highp = pvalRET(j, t + 1) + 0.2; 
+            lowp = pvalRET(j, t + 1) - 0.5;
+            highp = pvalRET(j, t + 1) + 0.5; 
             lowp2 = ntoi(lowp, 1, pgrid, np);
             highp2 = ntoi(highp, 1, pgrid, np);
          end
