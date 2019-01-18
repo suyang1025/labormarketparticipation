@@ -267,3 +267,5 @@ lprate4554 = mean(lprate(25:34, 1));
 lprate5565 = mean(lprate(35:45, 1));
 
 simlprate = mean(lprate(4:34, 1));
+simhours = mean(cdllaborsupply(15:30));
+simMoments = [simlprate, simhours];
