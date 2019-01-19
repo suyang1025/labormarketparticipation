@@ -14,20 +14,36 @@ spdef;
 %==================================
 %   Setup grids and shocks
 %==================================
-wVec = linspace(wMin, wMax, 80);
+wVec = setup_grids(0.1, 30, 20, 4);
 lengthWVec = length(wVec);
 
 %==================================
 %   Gauss Quadrature 
 % %==================================
-weig = zeros(1, 3);
-weig(1,1)= 0.1666666666666;
-weig(1,2)= 0.6666666666666;
-weig(1,3)= 0.1666666666666;
-grid = zeros(1, 3);
-grid(1,1)= -1.73205080756887;
-grid(1,2)=  0.0;
-grid(1,3)=  1.73205080756887;
+% weig = zeros(1, 3);
+% weig(1,1)= 0.1666666666666;
+% weig(1,2)= 0.6666666666666;
+% weig(1,3)= 0.1666666666666;
+% grid = zeros(1, 3);
+% grid(1,1)= -1.73205080756887;
+% grid(1,2)=  0.0;
+% grid(1,3)=  1.73205080756887;
+
+
+% 0.01125741 0.22207592 0.53333333 0.22207592 0.01125741
+% -2.856970e+00 -1.355626e+00  3.397760e-16  1.355626e+00  2.856970e+00
+weig = zeros(1, 5);
+weig(1,1)= 0.01125741;
+weig(1,2)= 0.22207592;
+weig(1,3)= 0.53333333;
+weig(1,4)= 0.22207592;
+weig(1,5)= 0.01125741;
+grid = zeros(1, 5);
+grid(1,1)= -2.856970e+00;
+grid(1,2)=  -1.355626e+00 ;
+grid(1,3)=  3.397760e-16;
+grid(1,4)=  1.355626e+00;
+grid(1,5)=  2.856970e+00;
 
 ThetaVals = sigma_t.*grid;
 
@@ -45,7 +61,7 @@ gr = grid*calRStd;
 calRPrm = 0.04; % Modest estimate of the equity premium of 4 percent
 mu = calRPrm + RFree;
 calRVals = mu + gr; 
-
+% calRVals = RFree;
 %==================================
 %   Wage Rate (nomalized)
 %
@@ -66,12 +82,14 @@ end
 
 fl_y = f_y'.*ThetaVals;
 
-% Gomes (2008) configuration of SS income (resulted ret_y = 8.7173)
-ret_y = exp(lambda*mean(lnf)*(1 - l_underlined));
+% % Gomes (2008) configuration of SS income (resulted ret_y = 8.7173)
+% ret_y = exp(lambda*mean(lnf)*(1 - l_underlined));
 
 % % Chai et al (2010) configuration of SS income (resulted ret_y = 53.4583)
 % ret_y = lambda*mean(f_y)*(1 - l_underlined);
-
+ret_y = lambda*(exp(mean(lnf)*(1 - l_underlined)));
+% ret_y = lambda*(exp(lnf)*(1 - l_underlined)));
+% ret_y = lambda*mean(f_y)*0.4;
 %==================================
 %   Housing Expenditures
 %==================================
