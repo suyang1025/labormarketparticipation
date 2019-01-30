@@ -30,47 +30,53 @@ for i = 2:35
     currentyr = td - i + 1; %% current age is 99 to 66
     
     net_income = (1 - ht(currentyr - tb))*(1 - taxss)*ret_y; % income is deterministic at each retirement age
-    vtplusonei_R = griddedInterpolant(wVec, fvalRET(:, t + 1),  'pchip'); 
+    vtplusonei_R = griddedInterpolant(wVec, fvalRET(:, t + 1), 'pchip', 'linear'); 
 
     for j = 1:length(wVec) 
         
-         if(t == 34)
-            lowc = cvalRET(j, t + 1)/2.5;
-            highc = cvalRET(j, t + 1);
-            if(wVec(j) >= 50)
-                highc = cvalRET(j, t + 1)/1.2;
-            end
-         elseif(t < 34 && t > 31) 
-            lowc = cvalRET(j, t + 1)/3.5;
-            highc = cvalRET(j, t + 1);
-            if(wVec(j) >= 50)
-                highc = cvalRET(j, t + 1)/1.1;
-            end
-         else % t < 31
-            lowc = cvalRET(j, t + 1) - 10;
-            highc = cvalRET(j, t + 1) + 10;
-          end
-     
-            lowc2 = ntoi(lowc, 1, cgrid, nc);
-            highc2 = ntoi(highc, 1, cgrid, nc);
-            cgrid2 = cgrid(1, lowc2 : highc2);
+%          if(t == 34)
+%             lowc = cvalRET(j, t + 1)- 10;
+%             highc = cvalRET(j, t + 1)+ 10; %consumption in the very last period equals wealth
+%                                        % plus income, consumption in the
+%                                        % period before shouldn't be higher
+%                                        % than that
+%             if(wVec(j) >= 50)
+% %                 highc = cvalRET(j, t + 1)/1.5;
+%                   highc = cvalRET(j, t + 1)+ 10;
+%             end
+%             
+%          elseif(t < 34 && t > 31) 
+%             lowc = cvalRET(j, t + 1)- 10;
+%             highc = cvalRET(j, t + 1)+ 10;
+%             if(wVec(j) >= 50)
+%                 highc = cvalRET(j, t + 1)+ 10;
+%             end
+%          else % t < 31
+%             lowc = cvalRET(j, t + 1) - 10;
+%             highc = cvalRET(j, t + 1) + 10;
+%           end
+%      
+%             lowc2 = ntoi(lowc, 1, cgrid, nc);
+%             highc2 = ntoi(highc, 1, cgrid, nc);
+%             cgrid2 = cgrid(1, lowc2 : highc2);
             
+            cgrid2 = cgrid;
             
-            lowp2 = 1;
-            highp2 = np;
-            
-         if(wVec(j) > 40 && t < 35) % wealth larger than a threshold      
-            lowp = pvalRET(j, t + 1) - 0.5;
-            highp = pvalRET(j, t + 1) + 0.5; 
-            lowp2 = ntoi(lowp, 1, pgrid, np);
-            highp2 = ntoi(highp, 1, pgrid, np);
-         end
-         
-         pgrid2 = pgrid(1, lowp2 : highp2);
-       
+%             lowp2 = 1;
+%             highp2 = np;
+%             
+%          if(wVec(j) > 40 && t < 35) % wealth larger than a threshold      
+%             lowp = pvalRET(j, t + 1) - 0.2;
+%             highp = pvalRET(j, t + 1) + 0.2; 
+%             lowp2 = ntoi(lowp, 1, pgrid, np);
+%             highp2 = ntoi(highp, 1, pgrid, np);
+%          end
+%          
+%          pgrid2 = pgrid(1, lowp2 : highp2);
+           pgrid2 = pgrid;
         % update the control grid
-            [CRN, PRN] = ndgrid(cgrid, pgrid);
-            [nc2, np2] = size(CRN);  
+        [CRN, PRN] = ndgrid(cgrid2, pgrid2);
+        [nc2, np2] = size(CRN);  
      
         
         savings = (wVec(j) + net_income - CRN); % given the current state grid value, we know all the potential savings over the consumption grid
