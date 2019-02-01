@@ -14,7 +14,10 @@ spdef;
 %==================================
 %   Setup grids and shocks
 %==================================
-wVec = setup_grids(0.1, 400, 80, 1);
+wVec1 = setup_grids(0.1, 100, 80, 1);
+wVec2 = setup_grids(110, 250, 60, 1);
+wVec3 = setup_grids(280, 400, 10, 1);
+wVec = [wVec1 wVec2 wVec3];
 lengthWVec = length(wVec);
 
 %==================================
