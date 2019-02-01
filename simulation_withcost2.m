@@ -75,7 +75,6 @@ for i = 1 : 80
     thetaindx = find(ThetaVals == Thetapath(i, j));
     cvalLifei = griddedInterpolant(wVec, cvalLife(:, thetaindx, i), 'spline');
     lvalLifei = griddedInterpolant(wVec, lvalLife(:, thetaindx, i), 'spline');
-    pvalLifei = griddedInterpolant(wVec, pvalLife(:, thetaindx, i), 'spline');
     
     
     % find current period policies given today's wealth and transitory
