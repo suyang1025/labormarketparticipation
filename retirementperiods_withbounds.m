@@ -30,7 +30,7 @@ for i = 2:35
     currentyr = td - i + 1; %% current age is 99 to 66
     
     net_income = (1 - ht(currentyr - tb))*(1 - taxss)*ret_y; % income is deterministic at each retirement age
-    vtplusonei_R = griddedInterpolant(wVec, fvalRET(:, t + 1), 'pchip', 'linear'); 
+    vtplusonei_R = griddedInterpolant(wVec, fvalRET(:, t + 1), 'pchip'); 
 
     for j = 1:length(wVec) 
         
@@ -59,9 +59,9 @@ for i = 2:35
 %             lowc2 = ntoi(lowc, 1, cgrid, nc);
 %             highc2 = ntoi(highc, 1, cgrid, nc);
 %             cgrid2 = cgrid(1, lowc2 : highc2);
-            
+%             
             cgrid2 = cgrid;
-            
+%             
 %             lowp2 = 1;
 %             highp2 = np;
 %             
